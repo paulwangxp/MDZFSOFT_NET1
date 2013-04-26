@@ -1,0 +1,76 @@
+﻿@model IEnumerable<MyCMS.Models.VendorModel>
+@{
+    ViewBag.Title = "厂商列表";
+}
+<h4 class="content_hd">
+    @ViewBag.Title</h4>
+<div class="content_bd">
+    <p>
+        @Html.ActionLink("新增", "Create", null, new { @class = "blue_mod_btn" })
+    </p>
+    @*<div class="gray_bor_bg">
+        <h5 class="gray_blod_word">
+            组合条件搜索</h5>
+        @using (Html.BeginForm())
+        {
+            <div class="search_form">
+                <label>
+                    姓名：</label>@Html.TextBox("name", "", new { @class = "input_79x19" })&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    警员编号：</label>@Html.TextBox("UserCode", "", new { @class = "input_79x19" })&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    所属部门：</label>@Html.TextBox("department", "", new { @class = "input_79x19" })
+                <input type="submit" class="blue_mod_btn" value="搜    索" />
+            </div>
+        }
+    </div>*@
+    <div class="mange_table log_table mt_10">
+        <table class="Js_grayBg common_table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ContactPerson)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateTime)
+                </th>
+                
+                <th>
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactPerson)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateTime)
+                    </td>
+                   
+                    <td>
+                        @Html.ActionLink("编辑", "Edit", new { id = item.VendorId }, new { style = "color:blue" }) |
+                        @Html.ActionLink("删除", "Delete", new { id = item.VendorId }, new { style = "color:red" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MyCMS.Models.DeviceModel>
+@{
+    ViewBag.Title = "设备列表";
+}
+<h4 class="content_hd">
+    @ViewBag.Title</h4>
+<div class="content_bd">
+    <p>
+        @Html.ActionLink("新增", "Create", null, new { @class = "blue_mod_btn" })
+    </p><br />
+
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">
+            组合条件搜索</h5>
+        @using (Html.BeginForm())
+        {
+            <div class="search_form">
+                <label>
+                    设备类型：</label>@Html.DropDownList("DeviceTypeId", String.Empty)&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    设备编号：</label>@Html.TextBox("DeviceNumber", "", new { @class = "input_79x19" })&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    厂商名称：</label>@Html.DropDownList("VendorId", String.Empty)
+                <input type="submit" class="blue_mod_btn" value="搜    索" />
+            </div>
+        }
+    </div>
+    <div class="mange_table log_table mt_10">
+        <table class="Js_grayBg common_table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceTypeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeviceNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VendorId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.Raw("所在部门")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateTime)
+                </th>
+                <th>
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.deviceType.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeviceNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.vendor.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user.Dep.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateTime)
+                    </td>
+                    <td>
+                        @Html.ActionLink("编辑", "Edit", new { id = item.DeviceId }, new { style = "color:blue" }) |
+                        @Html.ActionLink("删除", "Delete", new { id = item.DeviceId }, new { style = "color:red" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

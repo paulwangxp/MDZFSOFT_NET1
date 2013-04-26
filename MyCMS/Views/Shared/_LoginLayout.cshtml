@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - 我的 ASP.NET MVC 应用程序</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <!-- //add by paul -->
+    @Scripts.Render("~/bundles/myjs")
+    @RenderSection("scripts", required: false)
+</head>
+<body class="login_box">
+    <div id="body">
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+        </section>
+    </div>
+    <div class="footer_out">
+        <div class="footer">
+            <span>copyright &copy;2003-@DateTime.Now.Year njmdaf.com.All Rights Reserved</span><span>南京名都安防器械有限公司
+                版权所有</span><span>苏ICP备09016655号</span>
+        </div>
+    </div>
+    
+</body>
+</html>

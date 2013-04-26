@@ -1,0 +1,125 @@
+﻿@model IEnumerable<MyCMS.Models.UserProfile>
+@{
+    ViewBag.Title = "Index";
+}
+<script type="text/javascript">
+
+    function resetPassword(userNameVal) {
+        jQuery(function ($) {
+            if (confirm("您确认重置该用户的密码吗？")) {
+                $.ajax({
+                    url: '/Account/ChangePwd223',
+                    type: 'post',
+                    dataType: 'json',
+                    cache: false,
+                    async: false,
+                    data: { "userName": userNameVal },
+                    success: function (res) {
+                        if (res != null) {
+                            if (res.result != true) {
+                                alert(res.msg);
+                            }
+                            else {
+                                alert("密码重置成功");
+                            }
+                        }
+                        else {
+                            alert('请求失败,返回结果异常');
+                        }
+                    },
+                    error: function () {
+                        alert('请求失败 ');
+                    }
+                });
+            }
+        });
+    }
+</script>
+<h4 class="content_hd">
+    用户查询</h4>
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">
+            组合条件搜索</h5>
+        @using (Html.BeginForm())
+        {
+            <div class="search_form">
+                <label>
+                    姓名：</label>@Html.TextBox("name", "", new { @class = "input_79x19" })&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    警员编号：</label>@Html.TextBox("UserCode", "", new { @class = "input_79x19" })&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    所属部门：</label>@Html.DropDownList("DepartmentId", null, new { @class = "input_79x19" })
+                <input type="submit" class="blue_mod_btn" value="搜    索" />
+            </div>
+        }
+    </div>
+    <div class="mange_table log_table mt_10">
+        <table class="Js_grayBg common_table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Dep.name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoleId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sex)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Enable)
+                </th>
+                <th>
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dep.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role.RoleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Sex == 1 ? "男" : "女")
+                    </td>
+                    <td>
+                        @Html.Raw(item.Enable == 1 ? "启用" : "<font color='red'>停用</font>")
+                    </td>
+                    <td>
+                        @Html.ActionLink("编辑", "Edit", new { id = item.UserId }, new { style = "color:blue" })|
+                        <a href="###" onclick="resetPassword('@item.UserName')">密码重置</a> |
+                        @Html.ActionLink("删除", "Delete", new { id = item.UserId }, new { style = "color:red" })
+                    </td>
+                </tr>
+                        
+            }
+            <tr>
+                <td class="pl" colspan="8">
+                    <div class="pagination">
+                        @Html.Partial("_PagingNoNubmer")
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

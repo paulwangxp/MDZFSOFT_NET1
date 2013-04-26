@@ -1,0 +1,68 @@
+﻿@using PagedList
+@using PagedList.Mvc
+    @{
+        string pageCount = Model.PageCount.ToString();
+        string currentPageNum = Model.PageNumber.ToString();
+    }
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("<< 首页", "UserSelect", new
+    {
+        page = 1,
+        sortOrder = ViewBag.CurrentSortOrder,
+        name = ViewBag.Name,
+        userCode = ViewBag.UserCode,
+        department = ViewBag.department
+    }, new { style = "color:blue"})
+        @Html.Raw("&nbsp;");
+        @Html.ActionLink("< 前一页", "UserSelect", new
+    {
+        page = Model.PageNumber - 1,
+        sortOrder =
+            ViewBag.CurrentSortOrder,
+        name = ViewBag.Name,
+        userCode = ViewBag.UserCode,
+        department = ViewBag.department
+    }, new { style = "color:blue" })
+    }
+    else
+    {
+        @Html.Raw("<< 首页")
+        @Html.Raw("&nbsp;");
+        @Html.Raw("< 前一页")
+    }
+
+
+
+   
+                   
+    &nbsp;&nbsp;
+
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("下一页 >", "UserSelect", new
+    {
+        page = Model.PageNumber + 1,
+        sortOrder = ViewBag.CurrentSortOrder,
+        name = ViewBag.Name,
+        userCode = ViewBag.UserCode,
+        department = ViewBag.department
+    }, new { style = "color:blue" })
+        @Html.Raw("&nbsp;");
+        @Html.ActionLink("尾页 >>", "UserSelect", new
+    {
+        page = Model.PageCount,
+        sortOrder = ViewBag.CurrentSortOrder,
+        name = ViewBag.Name,
+        userCode = ViewBag.UserCode,
+        department = ViewBag.department
+    }, new { style = "color:blue" })
+    }
+    else
+    {
+        @Html.Raw("下一页 >");
+        @Html.Raw("&nbsp;")
+        @Html.Raw("尾页 >>")
+    }
+
+    <B>@Html.Raw("共 " + pageCount + " 页")</B>

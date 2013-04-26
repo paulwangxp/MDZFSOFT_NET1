@@ -1,0 +1,87 @@
+﻿@model MyCMS.Models.LoginModel
+@{
+    ViewBag.Title = "执法记录仪管理系统-欢迎登录";
+}
+
+
+
+
+@*<body class="login_box">*@
+<!--header=============================================begin-->
+<div id="header">
+    <div class="af_hd">
+        <a href="" class="logo">
+            <img src="~/Content/themes/mytheme/images/logo.png" alt="" />
+        </a>
+    </div>
+</div>
+<div class="login_main">
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <ul class="form_list">
+                <li class="form_item">
+                    @Html.LabelFor(m => m.UserName, new { @class = "lable" })&nbsp;
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "input_186x25" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </li>
+                <li class="form_item">
+                    @Html.LabelFor(m => m.Password, new { @class = "lable" })&nbsp;&nbsp;&nbsp;
+                    @Html.PasswordFor(m => m.Password, new { @class = "input_186x25" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </li>
+                @*<li class="form_item">
+                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "lable" })
+                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+            </li>*@
+                <li class="form_item">
+                    @Html.LabelFor(m => m.ValidateCode, new { @class = "lable" })&nbsp;
+                    @Html.TextBoxFor(m => m.ValidateCode, new { @class = "input_67x25" })
+                    @Html.ValidationMessageFor(m => m.ValidateCode)
+                    <img id="ValidateCode1" class="validate_img" src="~/Account/GetValidateCode" alt="看不清？点击更换" />
+                    <a href="javascript:void(0);" id="valiCode" class="green_link">重获验证码</a>
+                    <p class="pl_50 mt_10">
+                        <input type="submit" class="login_btn" value="" />
+                    </p>
+                </li>
+            </ul>
+        </fieldset>
+@*<p>
+        @Html.ActionLink("Register", "Register") (如果你没有帐户)。
+    </p>*@
+    }
+    <div class="login_opt white">
+        <span class="h_l"></span><span class="h_r"></span><a href="" class="white">执法随时录驱动下载</a>&nbsp;&nbsp;|&nbsp;
+        <a href="" class="white">上传插件下载</a>
+    </div>
+</div>
+@*<section class="social" id="socialLoginForm">
+    <h2>使用其他服务登录。</h2>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+</section>*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#valiCode").bind("click", function () {
+            var url = "/Account/GetValidateCode/?time=" + (new Date()).getTime();
+            $("#ValidateCode1").attr("src", url);
+            $.get("/Account/GetCurrentValidateCode", function (data) {
+                $("#ValidateCode1").val(data);
+            });
+        });
+        $("#UserName").focus();
+    });
+
+
+    //                         $("#ValidateCode").blur(function () {
+    //                             alert("111");
+    //                         })             
+
+</script>

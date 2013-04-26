@@ -1,0 +1,147 @@
+﻿@model IEnumerable<MyCMS.Models.MenuModel>
+@{
+    ViewBag.Title = "菜单管理";
+}
+<h4 class="content_hd" id="mainTitle">
+    @ViewBag.Title
+</h4>
+<div class="content_bd">
+    <p>
+        @Html.ActionLink("新建菜单", "Create", null, new { style = "color:blue" })
+    </p>
+    <div class="mange_table log_table mt_10">
+        <table class="Js_grayBg common_table common_table_name">
+            <tbody>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MenuName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MenuUrl)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.isRootMenu)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ParentId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.isShow)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SortId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Path)
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                @*@{
+    foreach (var item in Model.Where(p => p.ParentId == 0).OrderBy(p=>p.MenuId).OrderByDescending(p=>p.SortId))
+    {
+        
+                
+                //先根据sortID倒排，再根据menuid排序
+                var children = Model.Where(o => o.ParentId == item.MenuId).OrderBy(p=>p.MenuId).OrderByDescending(p=>p.SortId);
+        
+                <tr>
+                    <td class="textc">@Html.DisplayFor(modelItem => item.MenuName)</td>
+                    <td class="textc">
+                        @Html.DisplayFor(modelItem => item.MenuUrl)
+                    </td>
+                    <td class="textc">
+                        @Html.DisplayFor(modelItem => item.isRootMenu)
+                    </td>
+                    <td class="textc">
+                        @Html.DisplayFor(modelItem => item.ParentId)
+                    </td>
+                    <td class="textc">
+                        @Html.DisplayFor(modelItem => item.isShow)
+                    </td>
+                    <td class="textc">
+                        @Html.DisplayFor(modelItem => item.SortId)
+                    </td>
+                    <td class="textc">
+                        @Html.DisplayFor(modelItem => item.Path)
+                    </td>
+                    <td class="textc">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MenuId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.MenuId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MenuId })
+                    </td>
+                </tr>
+                if (children.Count() > 0)
+                {
+                   
+                    foreach (var child in children)
+                    {
+                            <tr>
+                                <td class="textc">&nbsp;&nbsp;&nbsp;&nbsp;|-@Html.DisplayFor(modelItem => child.MenuName)</td>
+                                <td class="textc">
+                                    @Html.DisplayFor(modelItem => child.MenuUrl)
+                                </td>
+                                <td class="textc">
+                                    @Html.DisplayFor(modelItem => child.isRootMenu)
+                                </td>
+                                <td class="textc">
+                                    @Html.DisplayFor(modelItem => child.ParentId)
+                                </td>
+                                <td class="textc">
+                                    @Html.DisplayFor(modelItem => child.isShow)
+                                </td>
+                                <td class="textc">
+                                    @Html.DisplayFor(modelItem => child.SortId)
+                                </td>
+                                <td class="textc">
+                                    @Html.DisplayFor(modelItem => child.Path)
+                                </td>
+                                <td class="textc">
+                                    @Html.ActionLink("Edit", "Edit", new { id = child.MenuId }) |
+                                    @Html.ActionLink("Details", "Details", new { id = child.MenuId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = child.MenuId })
+                                </td>
+                            </tr>
+                    }
+
+
+                }
+                
+        
+          }
+    }*@
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MenuName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MenuUrl)
+                        </td>
+                        <td class="textc">
+                            @Html.DisplayFor(modelItem => item.isRootMenu)
+                        </td>
+                        <td class="textc">
+                            @Html.DisplayFor(modelItem => item.ParentId)
+                        </td>
+                        <td class="textc">
+                            @Html.DisplayFor(modelItem => item.isShow)
+                        </td>
+                        <td class="textc">
+                            @Html.DisplayFor(modelItem => item.SortId)
+                        </td>
+                        <td class="textc">
+                            @Html.DisplayFor(modelItem => item.Path)
+                        </td>
+                        <td class="textc">
+                            @Html.ActionLink("编辑", "Edit", new { id = item.MenuId }) |
+                            @*@Html.ActionLink("查看", "Details", new { id = item.MenuId }) |*@
+                            @Html.ActionLink("删除", "Delete", new { id = item.MenuId })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<MyCMS.Models.RoleMenu>
+
+<script type="text/jscript">    var menuIndex = 0;</script>
+<div id="nav">
+    <div class="nav_box">
+        <div class="layout">
+            <ul class="nav_list">
+                @{
+                    if (Model == null)
+                    {
+                        Response.Redirect("/Account/Login");
+                        return;
+                    }
+                        
+                    //取出第一级
+                    var first = Model.Where(p => p.menus.ParentId == 0).OrderByDescending(p=>p.menus.SortId);
+                    foreach (var item in first)
+                    {
+                        //给第一级加样式
+                        <li class="nav_item"><a class="nav_target" href = "@item.menus.MenuUrl">@item.menus.MenuName</a>
+
+                        @{
+                    
+                        //取出第一级的下级
+                        var subItems = Model.Where(p => p.menus.ParentId == item.menus.MenuId).OrderByDescending(p => p.menus.SortId);
+
+                        if (subItems.ToList().Count > 0)
+                        {
+                            <ul class="nav_sublist">
+                            @foreach (var sub in subItems)
+                            {
+                                <li class="nav_subitem"><a class="nav_subtarget" href = "@sub.menus.MenuUrl">@sub.menus.MenuName</a></li>
+                            }
+                            </ul>
+                        }
+                    }
+
+                        </li>
+                    }
+
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/jscript">
+    jQuery(function ($) {
+        $(".nav_item").hover(function () {
+            var _this = $(this)
+            if (_this.find(".nav_sublist").length > 0) {
+                _this.addClass("nav_hover")
+                _this.find(".nav_sublist").show();
+
+            }
+        }, function () {
+            var _this = $(this)
+            if (_this.find(".nav_sublist").length > 0) {
+                _this.removeClass("nav_hover")
+                _this.find(".nav_sublist").hide();
+
+            }
+        });
+        
+    });
+</script>

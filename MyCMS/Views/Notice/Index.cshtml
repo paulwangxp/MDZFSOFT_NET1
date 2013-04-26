@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MyCMS.Models.NoticeModel>
+@{
+    ViewBag.Title = "公告管理";
+}
+<h4 class="content_hd">
+    @ViewBag.Title</h4>
+<div class="content_bd">
+    <div class="mange_table">
+        <table class="Js_grayBg common_table">
+            <colgroup>
+                <col class="col_220" />
+                <col class="col_235" />
+                <col class="col_65" />
+                <col class="col_60" />
+            </colgroup>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                    相关操作
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td class="textc">
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td class="textc">
+                        @Html.ActionLink("编辑", "Edit", new { id = item.NoticeId }) |
+                        @Html.ActionLink("查看", "Details", new { id = item.NoticeId }) |
+                        @Html.ActionLink("删除", "Delete", new { id = item.NoticeId })
+                    </td>
+                </tr>
+    }
+            
+            <!--table opt-->
+            <tr>
+                <td class="pr">
+                    @Html.ActionLink("新增公告", "Create", null, new { @class = "blue_mod_btn" })
+                </td>
+                <td class="pl" colspan="3">
+                    <div class="pagination">
+                    @Html.Partial("_Paging")
+                        @*<a href="">上一页</a> <span><a href="" class="current">1</a> <a href="">2</a> <a href="">
+                            3</a> ... <a href="">10</a> </span><a href="">下一页</a>*@
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class=" mt_10 pb_200">
+    </div>
+</div>

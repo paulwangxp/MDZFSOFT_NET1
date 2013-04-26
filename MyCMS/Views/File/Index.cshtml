@@ -1,0 +1,135 @@
+﻿@model IEnumerable<MyCMS.Models.FileModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadFileType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadUserDepartmentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadUserIP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RecordUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RecordUserDepartmentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadFileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RecordTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FilePlayTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileImportance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageShowPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlayPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RealPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FlvPlayPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadFileType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadUserDepartmentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadUserIP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecordUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecordUserDepartmentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadFileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecordTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FilePlayTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileImportance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageShowPath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlayPath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RealPath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FlvPlayPath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FileId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FileId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FileId })
+        </td>
+    </tr>
+}
+
+</table>

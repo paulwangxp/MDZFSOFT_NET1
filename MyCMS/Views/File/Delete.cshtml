@@ -1,0 +1,144 @@
+﻿@model MyCMS.Models.FileModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>FileModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UploadFileType)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UploadFileType)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UploadUserId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UploadUserId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UploadUserDepartmentId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UploadUserDepartmentId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UploadUserIP)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UploadUserIP)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RecordUserId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RecordUserId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RecordUserDepartmentId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RecordUserDepartmentId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UploadFileName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UploadFileName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CreateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RecordTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RecordTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UploadTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UploadTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FilePlayTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FilePlayTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FileImportance)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FileImportance)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FileState)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FileState)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ImageShowPath)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ImageShowPath)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PlayPath)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PlayPath)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RealPath)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RealPath)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FlvPlayPath)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FlvPlayPath)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

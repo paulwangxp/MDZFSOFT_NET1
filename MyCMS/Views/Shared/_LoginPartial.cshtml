@@ -1,0 +1,15 @@
+﻿@if (Request.IsAuthenticated) {
+    <text>
+        你好，@Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "管理" })!
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="blue_btn">注销</a>
+        }
+    </text>
+} else {
+    Response.Redirect("/Account/Login", true);//如果未登录直接跳到登录页面
+    <text>
+        @*@Html.ActionLink("注册", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })*@
+        @Html.ActionLink("登录", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </text>
+}

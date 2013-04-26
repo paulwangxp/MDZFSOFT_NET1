@@ -1,0 +1,162 @@
+﻿@using PagedList
+@using PagedList.Mvc
+    @{
+        string pageCount = Model.PageCount.ToString();
+        string currentPageNum = Model.PageNumber.ToString();
+    }
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("<< 首页", "UploadView", new
+    {
+        page = 1,
+        sortOrder = ViewBag.CurrentSortOrder,
+    }, new { style = "color:blue" })
+        @Html.Raw("&nbsp;");
+        @Html.ActionLink("< 前一页", "UploadView", new
+    {
+        page = Model.PageNumber - 1,
+        sortOrder =
+            ViewBag.CurrentSortOrder,
+    }, new { style = "color:blue" })
+    }
+    else
+    {
+        @Html.Raw("<< 首页")
+        @Html.Raw("&nbsp;");
+        @Html.Raw("< 前一页")
+    }
+
+    <span>@if ( Model.PageNumber -4 > 0)
+          {
+              string PageNum = (Model.PageNumber - 4).ToString();
+                @Html.ActionLink(PageNum, "UploadView", new
+                     {
+                         page = Model.PageNumber - 4,
+                         sortOrder = ViewBag.CurrentSortOrder
+                     })
+          }
+    </span>
+
+    <span>@if ( Model.PageNumber -3 > 0)
+          {
+              string PageNum = (Model.PageNumber - 3).ToString();
+                @Html.ActionLink(PageNum, "UploadView", new
+                     {
+                         page = Model.PageNumber - 3,
+                         sortOrder = ViewBag.CurrentSortOrder
+                     })
+          }
+    </span>
+
+    
+
+    <span>@if ( Model.PageNumber -2 > 0)
+          {
+              string PageNum = (Model.PageNumber - 2).ToString();
+                @Html.ActionLink(PageNum, "UploadView", new
+                     {
+                         page = Model.PageNumber - 2,
+                         sortOrder = ViewBag.CurrentSortOrder
+                     })
+          }
+    </span>
+
+    <span>@if ( Model.PageNumber -1 > 0)
+          {
+              string PageNum = (Model.PageNumber - 1).ToString();
+                @Html.ActionLink(PageNum, "UploadView", new
+                     {
+                         page = Model.PageNumber - 1,
+                         sortOrder = ViewBag.CurrentSortOrder
+                     })
+          }
+    </span>
+
+    <span>@Html.ActionLink(currentPageNum, "UploadView", new
+                 {
+                     page = Model.PageNumber,
+                     sortOrder = ViewBag.CurrentSortOrder
+                 }, new { @class="current"})
+    </span>
+
+    <span>@if (Model.PageCount > Model.PageNumber)
+          {
+              string PageNum = (Model.PageNumber + 1).ToString();
+                @Html.ActionLink(PageNum, "UploadView", new
+                     {
+                         page = Model.PageNumber + 1,
+                         sortOrder = ViewBag.CurrentSortOrder
+                     })
+          }
+    </span>
+
+    <span>@if (Model.PageCount > Model.PageNumber+1)
+          {
+              string PageNum = (Model.PageNumber + 2).ToString();
+                @Html.ActionLink(PageNum, "UploadView", new
+                     {
+                         page = Model.PageNumber + 2,
+                         sortOrder = ViewBag.CurrentSortOrder
+                     })
+          }
+    </span>
+
+    <span>@if (Model.PageCount > Model.PageNumber+2)
+          {
+              string PageNum = (Model.PageNumber + 3).ToString();
+                @Html.ActionLink(PageNum, "UploadView", new
+                     {
+                         page = Model.PageNumber + 3,
+                         sortOrder = ViewBag.CurrentSortOrder
+                     })
+          }
+    </span>
+
+    <span>@if (Model.PageCount > Model.PageNumber+3)
+          {
+              string PageNum = (Model.PageNumber + 4).ToString();
+                @Html.ActionLink(PageNum, "UploadView", new
+                     {
+                         page = Model.PageNumber + 4,
+                         sortOrder = ViewBag.CurrentSortOrder
+                     })
+          }
+    </span>
+
+
+
+    @*@if (Model.PageCount > 6)
+    {
+        @Html.Raw("...")
+    
+        <span>@Html.ActionLink(pageCount, "UploadView", new
+         {
+             page = Model.PageCount,
+             sortOrder = ViewBag.CurrentSortOrder
+         })</span> 
+     }*@
+                   
+    &nbsp;&nbsp;
+
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("下一页 >", "UploadView", new
+    {
+        page = Model.PageNumber + 1,
+        sortOrder = ViewBag.CurrentSortOrder,
+    }, new { style = "color:blue" })
+        @Html.Raw("&nbsp;");
+        @Html.ActionLink("尾页 >>", "UploadView", new
+    {
+        page = Model.PageCount,
+        sortOrder = ViewBag.CurrentSortOrder,
+    }, new { style = "color:blue" })
+    }
+    else
+    {
+        @Html.Raw("下一页 >");
+        @Html.Raw("&nbsp;")
+        @Html.Raw("尾页 >>")
+    }
+
+    <B>@Html.Raw("共 " + pageCount + " 页 总计 " + Model.TotalItemCount + " 条")</B>

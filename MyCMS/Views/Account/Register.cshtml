@@ -1,0 +1,93 @@
+﻿@model MyCMS.Models.RegisterModel
+@{
+    ViewBag.Title = "用户注册";
+}
+<h4 class="content_hd" id="mainTitle">
+    @ViewBag.Title
+</h4>
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.ValidationSummary()*@//字段后面加了错误提示后，上面的整体错误提示就可以去掉了
+
+            <fieldset>
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.UserName)
+                            @Html.TextBoxFor(m => m.UserName)
+                            @Html.ValidationMessageFor(m => m.UserName)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.Password)
+                            @Html.PasswordFor(m => m.Password)
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.ConfirmPassword)
+                            @Html.PasswordFor(m => m.ConfirmPassword)
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.Name)
+                            @Html.TextBoxFor(m => m.Name)
+                            @Html.ValidationMessageFor(m => m.Name)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.UserCode)
+                            @Html.TextBoxFor(m => m.UserCode)
+                            @Html.ValidationMessageFor(m => m.UserCode)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.Sex)
+                            @*@Html.TextBoxFor(m => m.Sex)*@
+                            @Html.RadioButton("Sex", 1, true, new { @class = "input_noStyle" })男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            @Html.RadioButton("Sex", 0, false, new { @class = "input_noStyle" })女
+                            @Html.ValidationMessageFor(m => m.Sex)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.DepartmentId)
+                            @*@Html.TextBoxFor(m => m.DepartmentId)*@
+                            @Html.DropDownList("DepartmentId")
+                            @Html.ValidationMessageFor(m => m.DepartmentId)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.RoleId)
+                            @*@Html.TextBoxFor(m => m.RoleId)*@
+                            @Html.DropDownList("RoleId", String.Empty)
+                            @Html.ValidationMessageFor(m => m.RoleId)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.Enable)
+                            @*@Html.TextBoxFor(m => m.Sex)*@
+                            @Html.RadioButton("Enable", 1, true, new { @class = "input_noStyle" })启用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            @Html.RadioButton("Enable", 0, false, new { @class = "input_noStyle" })停用
+                            @Html.ValidationMessageFor(m => m.Enable)
+                        </li>
+                    </ul>
+                </div>
+                <input type="submit" value="注册" class = "blue_mod_btn" />
+                @Html.ActionLink("返回", "Index", "Home",null, new { @class = "blue_mod_btn" })
+            </fieldset>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("input:not([class='blue_mod_btn'])").addClass("input_130x20");
+        $("select").addClass("input_130x20");
+        $(".input_noStyle").removeClass("input_130x20");
+
+        if ($("#body").height() < $(document).height()) {
+            $("body").css("height", $(document).height());
+        }
+
+    });
+</script>

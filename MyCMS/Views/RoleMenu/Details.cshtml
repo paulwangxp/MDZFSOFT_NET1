@@ -1,0 +1,29 @@
+﻿@model MyCMS.Models.RoleMenu
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>RoleMenu</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MenuId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MenuId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserRoleId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserRoleId)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.RoleMenuId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,189 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>部门编辑</title>
+    <link href="/Content/themes/mytheme/all.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Scripts/modernizr-2.5.3.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-ui-1.8.20.js"></script>
+    <!-- //add by paul -->
+    <script type="text/javascript" src="/Scripts/all.js"></script>
+    <script type="text/javascript" src="/Scripts/main.js"></script>
+    <script type="text/javascript" src="/Scripts/common.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery_dialog.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+        var b_v = navigator.appVersion;
+        var IE6 = b_v.search(/MSIE 6/i) != -1;
+        if (IE6) {
+            document.writeln('<script language="javascript" src="../../scripts/artDialog/jquery.artDialog.source.js?skin=default">');
+            document.writeln('</scr' + 'ipt>');
+        }
+        else {
+            document.writeln('<script language="javascript" src="../../scripts/artDialog/jquery.artDialog.source.js?skin=green">');
+            document.writeln('</scr' + 'ipt>');
+        }
+    </script>
+    <script type="text/javascript" src="../../scripts/artDialog/plugins/iframeTools.js"></script>
+</head>
+@model IEnumerable<MyCMS.Models.UserProfile>
+@{
+    ViewBag.Title = "Index";
+}
+<h4 class="content_hd">
+    用户查询</h4>
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">
+            组合条件搜索</h5>
+        @using (Html.BeginForm())
+        {
+            <div class="search_form">
+                <label>
+                    姓名：</label>@Html.TextBox("name", "", new { @class = "input_79x19" })&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    警员编号：</label>@Html.TextBox("UserCode", "", new { @class = "input_79x19" })&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    所属部门：</label>@Html.DropDownList("DepartmentId", null, new { @class = "input_79x19" })
+                <input type="submit" class="blue_mod_btn" value="搜    索" />
+            </div>
+        }
+    </div>
+    <div class="mange_table log_table mt_10">
+        <table class="Js_grayBg common_table" id="user_table">
+            <tr>
+                <th>
+                    @Html.Raw("选择")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Dep.name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoleId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sex)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Enable)
+                </th>
+                <th>
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.RadioButton("radio", item.UserId.ToString())
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dep.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role.RoleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Sex == 1 ? "男" : "女")
+                    </td>
+                    <td>
+                        @Html.Raw(item.Enable == 1 ? "启用" : "<font color='red'>停用</font>")
+                    </td>
+                    @*<td>
+                                @Html.ActionLink("编辑", "Edit", new { id = item.UserId }, new { style = "color:blue" }) |
+                                @Html.ActionLink("重置密码", "Details", new { id = item.UserId }) |
+                                @Html.ActionLink("删除", "Delete", new { id = item.UserId }, new { style = "color:red" })
+                            </td>*@
+                </tr>
+                        
+            }
+            <tr>
+                <td class="pl" colspan="8">
+                    <div class="pagination">
+                        @Html.Partial("_PagingNoNubmerUserSelectiFrame")
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".text-box").addClass("input_130x20");
+        $("#ParentID").addClass("input_130x20");
+        $("#testDialog").click(function () {
+            //            art.dialog.notice({
+            //                title: '万象网管',
+            //                width: 220, // 必须指定一个像素宽度值或者百分比，否则浏览器窗口改变可能导致artDialog收缩
+            //                content: '尊敬的顾客朋友，您IQ卡余额不足10元，请及时充值',
+            //                icon: 'face-sad',
+            //                time: 5
+            //            });
+
+        });
+
+        $('input:radio').click(function () {
+            art.dialog.data('usercode', $("input[type='radio']:checked").val());
+
+        });
+
+        $('#user_table tr').click(function () {
+            art.dialog.data('username', $(this).children('td').eq(5).text());
+        });
+    });
+
+
+    /**
+    * 设定主页面中采集人的内容
+    * param RecordUserName 采集人姓名
+    * param RecordUserId 采集人ID
+    * param dialogTitle 弹出层的标题
+    */
+    function getTableTDValue(trNumber, tdNumber) {
+        jQuery(function ($) {
+
+            //获取所有的行对象
+            var v = $('#user_table tr').size();
+            //获取第一行的对象
+            var trOne = $('#user_table tr:eq(0)');
+            //获取第一行第一列的对象
+            var tdOne = $('#user_table tr:eq(0) td:eq(0)');
+            //获取第一列的值
+            var text = $(tdOne).text();
+            alert(text);
+            $(tdOne).text("10-13");
+            //其他的依次类推如：$('#tableId tr:eq(0) td:eq(1)');获取第一列第二行的值
+            //获取第四行的对象
+            var trFour = $('#user_table tr:eq(3)');
+            //获取第四行第一列的对象
+            var tdFour = $('#user_table tr:eq(3) td:eq(0)');
+            //获取第一列的值
+            var textFour = $(tdOne).text();
+            alert(textFour);
+            $(tdFour).text("10-14");
+
+        });
+    }
+</script>

@@ -1,0 +1,43 @@
+﻿@model MyCMS.Models.NoticeModel
+@{
+    ViewBag.Title = "删除公告";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        <fieldset>
+            @*<legend>NoticeModel</legend>*@
+            <div class="new_form">
+                <ul class="form_list">
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.Title)
+                        @Html.DisplayFor(model => model.Title)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.Content)
+                        @Html.DisplayFor(model => model.Content)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.CreateDate)
+                        @Html.DisplayFor(model => model.CreateDate)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.CreateUserId)
+                        @Html.DisplayFor(model => model.CreateUserId)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.DepartmentId)
+                        @Html.DisplayFor(model => model.DepartmentId)
+                    </li>
+                </ul>
+            </div>
+        </fieldset>
+        @using (Html.BeginForm())
+        {
+            <p>
+                <input type="submit" value="删除" class="blue_mod_btn" onclick='{if(confirm("确定删除吗？")){return true;}return false;}' />
+                @Html.ActionLink("返回", "Index", null, new { @class = "blue_mod_btn" })
+            </p>
+        }
+    </div>
+</div>

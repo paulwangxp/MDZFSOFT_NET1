@@ -1,0 +1,67 @@
+﻿@model MyCMS.Models.NoticeModel
+@{
+    ViewBag.Title = "公告编辑";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item">@*<legend>NoticeModel</legend>*@
+                            @Html.HiddenFor(model => model.NoticeId)
+                                @Html.LabelFor(model => model.Title)
+                                @Html.EditorFor(model => model.Title)
+                                @Html.ValidationMessageFor(model => model.Title)
+                        </li>
+                        <li class="form_item">
+                                @Html.LabelFor(model => model.Content)
+                                @Html.TextAreaFor(model => model.Content, 8, 60, new { })
+                                @Html.ValidationMessageFor(model => model.Content)
+                        </li>
+                        <li class="form_item">
+                                @Html.LabelFor(model => model.CreateDate)
+                                @Html.EditorFor(model => model.CreateDate)
+                                @Html.ValidationMessageFor(model => model.CreateDate)
+                        </li>
+                        <li class="form_item">
+                                @Html.LabelFor(model => model.CreateUserId)
+                                @Html.EditorFor(model => model.CreateUserId)
+                                @Html.ValidationMessageFor(model => model.CreateUserId)
+                        </li>
+                        <li class="form_item">
+                                @Html.LabelFor(model => model.DepartmentId)
+                                @Html.EditorFor(model => model.DepartmentId)
+                                @Html.ValidationMessageFor(model => model.DepartmentId)
+                        </li>
+                        <p>
+                            <input type="submit" value="保存" class = "blue_mod_btn"/>
+                            @Html.ActionLink("返回", "Index", null,new { @class = "blue_mod_btn" })
+                        </p>
+                    </ul>
+                </div>
+            </fieldset>
+        }
+        <div>
+    
+</div>
+    </div>
+    
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".text-box").addClass("input_130x20");
+        $("#ParentID").addClass("input_130x20");
+
+    });
+</script>

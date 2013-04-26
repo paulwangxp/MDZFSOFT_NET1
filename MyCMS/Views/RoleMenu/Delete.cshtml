@@ -1,0 +1,32 @@
+﻿@model MyCMS.Models.RoleMenu
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>RoleMenu</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MenuId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MenuId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserRoleId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserRoleId)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

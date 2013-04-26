@@ -1,0 +1,65 @@
+﻿@model MyCMS.Models.DepartmentModel
+@{
+    ViewBag.Title = "部门新增";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        @using (Html.BeginForm())
+        {
+            
+
+            <fieldset>
+                @*<legend>Department</legend>*@
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item editor-field">
+                                @Html.LabelFor(model => model.ParentId)
+                                @Html.DropDownList("ParentId")
+                                @Html.ValidationMessageFor(model => model.ParentId)
+                        </li>
+
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.name)
+                            @Html.EditorFor(model => model.name)
+                            @Html.ValidationMessageFor(model => model.name)
+                        </li>
+
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.Description)
+                            @Html.EditorFor(model => model.Description)
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </li>
+
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.SortId)
+                            @Html.EditorFor(model => model.SortId)
+                            @Html.ValidationMessageFor(model => model.SortId)
+                        </li>
+
+                        <li class="form_item">
+                            @Html.HiddenFor(model => model.Path)
+                        </li>
+                        <p>
+                            <input onclick="location.href='javascript:void(0);'" type="submit" value="保存" class="blue_mod_btn"  /> @Html.ActionLink("返回列表", "Index", null, new { @class = "blue_mod_btn" })
+                        </p>
+                    </ul>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".text-box").addClass("input_130x20");
+        $("#ParentId").addClass("input_130x20");
+        $("#Path").val("123");
+
+    });
+</script>

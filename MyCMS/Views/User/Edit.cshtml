@@ -1,0 +1,74 @@
+﻿@model MyCMS.Models.UserProfile
+@{
+    ViewBag.Title = "编辑用户";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                @Html.HiddenFor(model => model.UserId)
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.UserName)
+                            @Html.EditorFor(model => model.UserName)
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.DepartmentId)
+                            @Html.DropDownList("DepartmentId")
+                            @Html.ValidationMessageFor(model => model.DepartmentId)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.RoleId)
+                            @Html.DropDownList("RoleId")
+                            @Html.ValidationMessageFor(model => model.RoleId)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.UserCode)
+                            @Html.EditorFor(model => model.UserCode)
+                            @Html.ValidationMessageFor(model => model.UserCode)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.Name)
+                            @Html.EditorFor(model => model.Name)
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.Sex)
+                            @Html.RadioButton("Sex", 1, Model.Sex == 1 ? true : false, new { @class = "input_noStyle" })男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            @Html.RadioButton("Sex", 0, Model.Sex == 0 ? true : false, new { @class = "input_noStyle" })女
+                            @Html.ValidationMessageFor(m => m.Sex)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(m => m.Enable)
+                            @Html.RadioButton("Enable", 1, Model.Enable == 1 ? true : false, new { @class = "input_noStyle" })启用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            @Html.RadioButton("Enable", 0, Model.Enable == 0 ? true : false, new { @class = "input_noStyle" })停用
+                            @Html.ValidationMessageFor(m => m.Enable)
+                        </li>
+                    </ul>
+                </div>
+                <p>
+                    <input type="submit" value="保存" class = "blue_mod_btn" />
+                    @Html.ActionLink("返回", "Index", null, new { @class = "blue_mod_btn" })
+                </p>
+            </fieldset>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".text-box").addClass("input_130x20");
+        $("#ParentID").addClass("input_130x20");
+
+    });
+</script>

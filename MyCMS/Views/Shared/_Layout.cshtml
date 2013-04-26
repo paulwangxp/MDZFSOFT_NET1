@@ -1,0 +1,78 @@
+﻿@*<!DOCTYPE html>
+<html lang="zh">*@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <!-- //add by paul -->
+    @Scripts.Render("~/bundles/myjs")
+    @Scripts.Render("~/bundles/jqueryui")
+    @*@Scripts.Render("~/bundles/dialogjs")*@
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+    var b_v = navigator.appVersion;
+    var IE6 = b_v.search(/MSIE 6/i) != -1;
+    if (IE6) {
+        document.writeln('<script language="javascript" src="/scripts/artDialog/jquery.artDialog.source.js?skin=default">');
+    document.writeln('</scr' + 'ipt>');
+    }
+    else {
+        document.writeln('<script language="javascript" src="/scripts/artDialog/jquery.artDialog.source.js?skin=green">');
+        document.writeln('</scr' + 'ipt>');
+    }
+    </script>
+    <script type="text/javascript" src="/scripts/artDialog/plugins/iframeTools.js"></script>
+</head>
+<body>
+    <div class="wrap_page">
+        <div id="header">
+            <div class="logobox">
+                <div class="layout">
+                    <a href="" class="mainlogo">
+                        <img src="~/Content/themes/mytheme/images/mainlogo.png" alt="" />
+                    </a>
+                    <div class="cur_time">
+                        今天是：<span id="localtime">@DateTime.Now.ToLongDateString().ToString()</span>
+                    </div>
+                    <div class="show_user">
+                        <div class="cureent_user">
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            @Html.Action("MyMenus","RoleMenu")
+        <!--content============================================begin-->
+        <div id="container">
+            <div class="layout clearfix">
+                @Html.Partial("_UserInfoPartial")
+                <div class="w_805 fr">
+                    <div class="white_p10">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>*@
+    </div>
+    @*<footer>*@
+    <div id="footer">
+        <div class="footer">
+            <span>copyright ©2003-@DateTime.Now.Year njmdaf.com.All Rights Reserved</span><span>南京名都安防器械有限公司
+                版权所有</span> <span>苏ICP备09016655号</span>
+        </div>
+    </div>
+    @*</footer>*@
+</body>
+</html>

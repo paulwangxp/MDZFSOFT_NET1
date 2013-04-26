@@ -1,0 +1,270 @@
+﻿@model IEnumerable<MyCMS.Models.FileModel>
+@{
+    ViewBag.Title = "文件上传";
+}
+<object id="MDOCX" classid="clsid:8B2CE00D-FEE7-4B4A-B6A4-BDCF5A0BA624" width="0"
+    height="0">
+</object>
+<script type="text/javascript">
+    var ftpHost = "@ViewBag.ftpHost";
+    var ftpPort = "@ViewBag.ftpPort";
+    var ftpUser = "@ViewBag.ftpUser";
+    var ftpPswd = "@ViewBag.ftpPswd";
+
+    var bUploadType = 0;
+
+    var defaultEditId = "";
+    var defaultEditName = "";
+    function setDefaultVal(editId, editName) {
+        defaultEditId = editId;
+        defaultEditName = editName;
+    }
+    var yewu = true;
+    var setupUrl = "/Downloads/md_1.0.0.5.CAB"; //安装插件的链接地址
+    var nowVersion = "1.0.0.5"; //当前使用的版本号
+    var static_selectLetter = ""; //当前上传的盘符
+    var static_sum = 0; //总共的上传文件数量
+    var static_uploaded = 0; //已经上传的文件数量
+    var static_fileUrl = ""; //上传文件的原始文件全路径
+    var saveAs = ""; //保存的文件名
+    var saveDir = ""; //保存的路径
+    var static_localFilePath; //本地文件上传保持的路径
+    var static_ftpLogin = false; //ftp登录状态
+    var static_imgShow = true; //图片显示
+    var static_FistCallFun = true;
+    var static_speed = 0;
+    var static_per = 0;
+    var static_fileType = 0; //上传文件类型 0：avi 1:mp4 2:wav 3:jpg
+    var static_remoteFileName = "";//上传到FTP的文件名
+
+    var fileTotalNums = 0;
+    var ProgressBar = null;
+
+</script>
+<script type="text/javascript" src="~/Scripts/fileUpload.js"></script>
+<h4 class="content_hd">
+    文件查询</h4>
+<div class="error msg" id="fileManagerAddMsg" style="display: none" onclick="hideObj('fileManagerAddMsg')">
+    Message if login failed</div>
+<div class="error msg" id="fileManagerAddInformation" style="display: none" onclick="hideObj('fileManagerAddInformation')">
+    Message if login failed</div>
+<div class="content_bd">
+    <table>
+        <tr>
+            <td>
+                <ul class="my_uplist">
+                    <li class="my_upitem clearfix" id="uploadType1">
+                        <div class="up_help_img ">
+                            <img src="~/Content/themes/mytheme/images/up_step1.png" alt="" /><a href="javascript:uploadTypeDiv1()">选择进入&gt;&gt;</a>
+                        </div>
+                    </li>
+                    <li class="my_upitem clearfix" id="uploadType2">
+                        <div class="up_help_img ">
+                            <img src="~/Content/themes/mytheme/images/up_step2.png" alt="" /><a href="javascript:uploadTypeDiv2()">选择进入&gt;&gt;</a>
+                        </div>
+                    </li>
+                    <li class="my_upitem clearfix" id="uploadType3">
+                        <div class="up_help_img ">
+                            <img src="~/Content/themes/mytheme/images/up_step3.png" alt="" /><a href="javascript:uploadTypeDiv3()">选择进入&gt;&gt;</a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <div id="selectLetter">
+                </div>
+                <div id="UsbUploadDiv" style="display: none">
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<label>采&nbsp;集&nbsp;人：</label>
+                    <input type="text" id="editName1" name="editName" value="" class="input_79x19" readonly="readonly"
+                        onclick="userChoose()" /><br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<label>上传名称：</label>
+                    <input type="text" style="width: 220px" id="uploadNameValue1" class="input_79x19"
+                        name="uploadNameValue" value="" datatype="LimitB" min="4" max="80" msg="上传名称【4-80】个字符" />
+                    <br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<a class="blue_mod_btn" href="#" onclick="startUpload()">开始上传</a>
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div id="localSaveDiv" style="display: none">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<label>选择文件夹：</label>
+                    <input type="text" id="localSaveDir" readonly="readonly" onclick="selectLocalSaveDir()" /><br /><br />
+                    <input type="button" class="blue_mod_btn" id="localSaveButton" onclick="copyLocalFile()" value="确认" style="display:none"/>
+                    <br />
+                </div>
+                <div id="localUploadDiv" style="display: none">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<label>选择文件夹：</label>
+                    <input type="text" id="localUploadDir" readonly="readonly" onclick="selectLocalUploadDir()"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div id="localUploadSelDiv" style="display: none">
+                    <br /><label>&nbsp;&nbsp;&nbsp;&nbsp;采&nbsp;集&nbsp;人：&nbsp;&nbsp;</label>
+                    <input type="text" id="editName3" name="editName" value="" class="input_79x19" readonly="readonly"
+                        onclick="userChoose()" /><br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<label>上传名称：&nbsp;&nbsp;</label>
+                    <input type="text" style="width: 220px" id="uploadNameValue3" class="input_79x19"
+                        name="uploadNameValue" value="" datatype="LimitB" min="4" max="80" msg="上传名称【4-80】个字符" />
+                    <br />
+                    <br />
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;<a class="blue_mod_btn" href="#" onclick="startUpload()">开始上传</a>
+                    </div>
+                </div>
+                <div id="progress" style="margin:20px 10px 5px 24px;"></div>
+                <div id="speed" style="margin:0px 10px 10px 24px;"></div>
+                <script type="text/javascript" src="~/Scripts/util.js"></script>
+                <script type="text/javascript" src="~/Scripts/progressbar.js"></script>
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<label>
+                </label>
+            </td>
+        </tr>
+    </table>
+</div>
+<form id="uploadForm" method="post" action="/file/upload" target="db">
+<input type="hidden" id="upload_editId" name="upload_editId" value="" />
+<input type="hidden" id="upload_playPath" name="upload_playPath" value="" />
+<input type="hidden" id="upload_uploadName" name="upload_uploadName" value="" />
+<input type="hidden" id="upload_playCreatetime" name="upload_playCreatetime" value="" />
+</form>
+<script type="text/javascript">
+
+    function getUserId() {
+        var userId = "@ViewBag.userId";
+        return userId;
+    }
+
+    function getUserDepartmentId() {
+        var userDepId = "@ViewBag.userDepId";
+        return userDepId;
+
+    }
+
+    function closeDialog() {
+        $('#closeDialog').click();
+    }
+
+
+    //打开提示图片信息
+    function showImg(showIndex) {
+        jQuery(function ($) {
+            if (static_imgShow) {
+                $("#imgShow").attr("src", contextPath() + "/images/uploadtype" + showIndex + ".jpg");
+                $("#imgShow").css("display", "block");
+            }
+        });
+    }
+    //隐藏提示图片信息
+    function hideImg(showIndex) {
+        jQuery(function ($) {
+            $("#imgShow").css("display", "none");
+        });
+    }
+    //弹出 从USB设备获取文件 上传至服务器
+    function uploadTypeDiv1() {
+        jQuery(function ($) {            
+            bUploadType = 1;
+            $('#uploadNameValue1').val("");
+            $('#editName1').val("");
+            hideObj("fileManagerAddMsg");
+            hideObj("fileManagerAddInformation");
+            hideObj("uploadType2");
+            hideObj("uploadType3");
+            CreateRemoteDir(getUserId() + ',' + getUserDepartmentId()); //先根据userid创建文件夹
+            //$("#UsbUploadDiv").css("display", "block");
+            getUsbDriver();
+            static_imgShow = false;
+            fileTotalNums = 0; //上传总个数 重置
+            static_uploaded = 0; //当前上传个数 重置
+            //bar.setProgress(20);
+
+            static_FistCallFun = true;
+        });
+    }
+    //弹出 从USB设备获取文件 上传至本地文件夹
+    function uploadTypeDiv2() {
+        jQuery(function ($) {
+            bUploadType = 2;
+            hideObj("fileManagerAddMsg");
+            hideObj("fileManagerAddInformation");
+            hideObj("uploadType1");
+            hideObj("uploadType3");
+            $("#imgShow").css("display", "none");
+            //$("#localSaveDiv").css("display", "block");
+            getUsbDriver();
+            static_imgShow = false;
+            fileTotalNums = 0; //上传总个数 重置
+            static_uploaded = 0; //当前上传个数 重置
+
+            static_FistCallFun = true;
+
+
+        });
+    }
+    //弹出 从本地文件夹获取文件 上传至服务器
+    function uploadTypeDiv3() {
+        jQuery(function ($) {
+            bUploadType = 3;
+            $('#uploadNameValue3').val("");
+            $('#editName1').val("");
+            hideObj("fileManagerAddMsg");
+            hideObj("fileManagerAddInformation");
+            hideObj("uploadType1");
+            hideObj("uploadType2");
+            CreateRemoteDir(getUserId() + ',' + getUserDepartmentId());
+            $("#imgShow").css("display", "none");
+            $("#localUploadDiv").css("display", "block");
+            static_imgShow = false;
+            fileTotalNums = 0; //上传总个数 重置
+            static_uploaded = 0; //当前上传个数 重置
+
+            static_FistCallFun = true;
+
+        });
+    }
+
+    /**
+    * 用户选择
+    * param assignmentId 
+    * param assignmentName 
+    * param dialogTitle 弹出层的标题
+    */
+    function userChoose(assignmentId, assignmentName, dialogTitle, onlyRoot) {
+        jQuery(function ($) {
+            //$.weeboxs.open('#userChooseDiv', { title: dialogTitle, contentType: 'selector', width: '600', height: '450' });
+            art.dialog.open('/User/UserSelect', { title: '选择采集人', width: '700', height: '400', background: '#000',
+                ok: function () {
+                    setUserValue(art.dialog.data('username'), art.dialog.data('usercode'));
+                    art.dialog.close();
+                }
+            });
+        });
+    }
+
+    /**
+    * 设定主页面中采集人的内容
+    * param RecordUserName 采集人姓名
+    * param RecordUserId 采集人ID
+    * param dialogTitle 弹出层的标题
+    */
+    function setUserValue(RecordUserName, RecordUserId) {
+        jQuery(function ($) {
+            if(bUploadType == 1)
+            {
+                $('#editName1').val(RecordUserName);
+                
+             }
+            else if(bUploadType == 3)
+            {
+                $('#editName3').val(RecordUserName);
+            }
+
+            $('#upload_editId').val(RecordUserId);
+
+        });
+    }
+
+    
+    
+</script>

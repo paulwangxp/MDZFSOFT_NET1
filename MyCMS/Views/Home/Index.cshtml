@@ -1,0 +1,15 @@
+﻿@model MyCMS.Models.UserProfile
+@{
+    ViewBag.Title = "执法记录仪管理系统-首页";
+    //Session["UserCode"] = Model.UserCode;
+    //Session["UserRoleId"] = Model.RoleId;
+    //Session["UserRoleName"] = Model.Role.Description;
+    //Session["DepName"] = Model.Dep.name;
+    Html.RenderAction("Index2", "Notice");
+    
+}
+<script type="text/jscript">
+    jQuery(function ($) {
+        $(".nav_item:first").addClass("current");
+    });
+</script>

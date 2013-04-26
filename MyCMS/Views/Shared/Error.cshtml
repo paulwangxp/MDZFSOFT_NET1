@@ -1,0 +1,16 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "错误";
+}
+
+
+
+
+<div class="content_bd">
+    <div class="mange_table" id="mainContext">
+        <div class="accordion" style="font-size:20px">
+        @Request.QueryString["msg"].ToString()
+        </div>
+    </div>
+</div>

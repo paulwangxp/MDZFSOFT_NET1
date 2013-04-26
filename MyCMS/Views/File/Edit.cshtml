@@ -1,0 +1,173 @@
+﻿@model MyCMS.Models.FileModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>FileModel</legend>
+
+        @Html.HiddenFor(model => model.FileId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UploadFileType)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UploadFileType)
+            @Html.ValidationMessageFor(model => model.UploadFileType)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UploadUserId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UploadUserId)
+            @Html.ValidationMessageFor(model => model.UploadUserId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UploadUserDepartmentId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UploadUserDepartmentId)
+            @Html.ValidationMessageFor(model => model.UploadUserDepartmentId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UploadUserIP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UploadUserIP)
+            @Html.ValidationMessageFor(model => model.UploadUserIP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RecordUserId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RecordUserId)
+            @Html.ValidationMessageFor(model => model.RecordUserId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RecordUserDepartmentId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RecordUserDepartmentId)
+            @Html.ValidationMessageFor(model => model.RecordUserDepartmentId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UploadFileName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UploadFileName)
+            @Html.ValidationMessageFor(model => model.UploadFileName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreateTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreateTime)
+            @Html.ValidationMessageFor(model => model.CreateTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RecordTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RecordTime)
+            @Html.ValidationMessageFor(model => model.RecordTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UploadTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UploadTime)
+            @Html.ValidationMessageFor(model => model.UploadTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FilePlayTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FilePlayTime)
+            @Html.ValidationMessageFor(model => model.FilePlayTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FileImportance)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FileImportance)
+            @Html.ValidationMessageFor(model => model.FileImportance)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FileState)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FileState)
+            @Html.ValidationMessageFor(model => model.FileState)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ImageShowPath)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ImageShowPath)
+            @Html.ValidationMessageFor(model => model.ImageShowPath)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PlayPath)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PlayPath)
+            @Html.ValidationMessageFor(model => model.PlayPath)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RealPath)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RealPath)
+            @Html.ValidationMessageFor(model => model.RealPath)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FlvPlayPath)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FlvPlayPath)
+            @Html.ValidationMessageFor(model => model.FlvPlayPath)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

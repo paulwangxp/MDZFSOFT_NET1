@@ -1,0 +1,176 @@
+﻿@model IEnumerable<MyCMS.Models.FileModel>
+@{
+    ViewBag.Title = "文件查看";
+}
+@*<script type="text/javascript">
+$.datepicker.regional['zh_CN'] = {
+            closeText: '关闭',
+            prevText: '&#x3c;上月',
+            nextText: '下月&#x3e;',
+            currentText: '今天',
+            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
+		'七月', '八月', '九月', '十月', '十一月', '十二月'],
+            monthNamesShort: ['01', '02', '03', '04', '05', '06',
+		'07', '08', '09', '10', '11', '12'],
+            dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+            dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+            dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+            dateFormat: 'yy-mm-dd', firstDay: 1,
+            isRTL: false
+        };
+</script>*@
+<script type="text/javascript">
+    var curClick = 0;
+</script>
+<h4 class="content_hd">@ViewBag.Title</h4>
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        @using (Html.BeginForm("UploadView", "File", "post"))
+        {
+            <h5 class="gray_blod_word">
+                组合条件搜索</h5>
+                
+            <div class="search_form">
+                <div class="mt_10">
+                    <label>
+                        上传人:</label>
+                    @Html.TextBox("uploadUser", null, new { @class = "input_79x19", @readOnly = "readOnly", OnClick = "curClick = 1;userChoose();" })
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    @Html.Hidden("uploadUserId");
+                    <label>
+                        操作时段:</label><input type="text" class="input_79x19" id="begainDate" />&nbsp;&nbsp;-&nbsp;&nbsp;<input
+                            type="text" class="input_79x19" id="endDate" />
+                </div>
+                <div class="mt_10">
+                    <label>
+                        采集人:</label>
+                    @Html.TextBox("recordUser", null, new { @class = "input_79x19", @readOnly = "readOnly", OnClick = "curClick = 2;userChoose();" })
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    @Html.Hidden("recordUserId");
+                    <label>
+                        操作时段:</label><input type="text" class="input_79x19" id="UploadBeginDate" />&nbsp;&nbsp;-&nbsp;&nbsp;<input
+                            type="text" class="input_79x19" id="UploadendDate" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>
+                    所属部门：</label>@Html.DropDownList("DepartmentId", null, new { @class = "input_79x19" })
+                </div>
+                <div class="mt_10">
+                    <label>
+                        备注:&nbsp;&nbsp;&nbsp;</label><input type="text" class="input_320x20" id="Description" />
+                    <input type="submit" class="blue_mod_btn" value="搜    索" />
+                </div>
+            </div>
+        }
+    </div>
+    <div class=" mt_10">
+        <ul class="upload_list">
+            @foreach (var item in Model)
+            {
+                <li class="upload_item">
+                    <div class="upload_img">
+                        <a href="/" class="img160">
+                            <img src="@item.ImageShowPath" alt="" title="@item.Description" />
+                        </a>
+                    </div>
+                    <div class="upload_descript">
+                        @(item.UploadFileName.Length > 24 ? @item.UploadFileName.Substring(@item.UploadFileName.Length - 24, 24) : @item.UploadFileName)
+                    </div>
+                    <div class="upload_opterdetails">
+                        <ul>
+                            <li><span class="hd">创建时间：</span> <span class="bd">@item.CreateTime</span> </li>
+                            <li><span class="hd">上传时间：</span> <span class="bd">@item.UploadTime</span> </li>
+                            <li><span class="hd">上 传 人：</span> <span class="bd">@item.UploadUser.Name</span>
+                            </li>
+                            <li><span class="hd">采 集 人：</span> <span class="bd">@item.RecordUser.Name</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix mt_10">
+                        <a href="" class="fl cancle">取消</a> 
+                        <a href="###" class="blue_mod_btn fr" onclick="playVideo();">
+                            @{if (item.UploadFileType == 1)
+                              {@Html.Raw("播放视频")}
+                              else
+                              {
+                                  if (item.UploadFileType == 2)
+                                  {@Html.Raw("播放音频")}
+                                  else
+                                  {@Html.Raw("查看图片")}
+                              }
+                            }
+                        </a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="pagination">
+        @Html.Partial("_PagingUploadView");
+    </div>
+</div>
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+}
+*@
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $(".ui-datepicker").css("display", "none");
+    });
+
+    function playVideo() {
+        art.dialog.open('/User/UserSelect', { title: '', width: '700', height: '400', background: '#000',
+            ok: function () {
+                setUserValue(art.dialog.data('username'), art.dialog.data('usercode'));
+                art.dialog.close();
+            }
+        })
+    };
+    
+    
+    /**
+    * 用户选择
+    * param assignmentId 
+    * param assignmentName 
+    * param dialogTitle 弹出层的标题
+    */
+    function userChoose() {
+        jQuery(function ($) {
+            //$.weeboxs.open('#userChooseDiv', { title: dialogTitle, contentType: 'selector', width: '600', height: '450' });
+            art.dialog.open('/User/UserSelect', { title: '', width: '700', height: '400', background: '#000',
+                ok: function () {
+                    setUserValue(art.dialog.data('username'), art.dialog.data('usercode'));
+                    art.dialog.close();
+                },
+                cancel: function () {
+                    setUserValue('', '');
+                    art.dialog.close();
+                }
+            });
+        });
+    }
+
+    /**
+    * 设定主页面中采集人的内容
+    * param RecordUserName 采集人姓名
+    * param RecordUserId 采集人ID
+    * param dialogTitle 弹出层的标题
+    */
+    function setUserValue(RecordUserName, RecordUserId) {
+        jQuery(function ($) {
+
+            if (curClick == 2) {
+                $('#recordUser').val(RecordUserName);
+                $('#recordUserId').val(RecordUserId);
+            }
+            else {
+                $('#uploadUser').val(RecordUserName);
+                $('#uploadUserId').val(RecordUserId);
+            }
+
+            //$('#upload_editId').val(RecordUserId);
+
+        });
+    }
+</script>

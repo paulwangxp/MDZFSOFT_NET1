@@ -1,0 +1,77 @@
+﻿@model MyCMS.Models.MenuModel
+@{
+    ViewBag.Title = "菜单编辑";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                @*<legend>Menu</legend>*@
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item">
+                            @Html.HiddenFor(model => model.MenuId)
+                            @Html.LabelFor(model => model.MenuName)
+                            @Html.EditorFor(model => model.MenuName)
+                            @Html.ValidationMessageFor(model => model.MenuName)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.MenuUrl)
+                            @Html.EditorFor(model => model.MenuUrl)
+                            @Html.ValidationMessageFor(model => model.MenuUrl)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.isRootMenu)
+                            @Html.EditorFor(model => model.isRootMenu)
+                            @Html.ValidationMessageFor(model => model.isRootMenu)
+                            <li class="form_item">
+                                @Html.LabelFor(model => model.ParentId)
+                                @*@Html.EditorFor(model => model.ParentId)*@
+                                @Html.DropDownList("ParentID")
+                                @Html.ValidationMessageFor(model => model.ParentId)
+                            </li>
+                            <li class="form_item">
+                                @Html.LabelFor(model => model.isShow)
+                                @Html.EditorFor(model => model.isShow)
+                                @Html.ValidationMessageFor(model => model.isShow)
+                            </li>
+                            <li class="form_item">
+                                @Html.LabelFor(model => model.SortId)
+                                @Html.EditorFor(model => model.SortId)
+                                @Html.ValidationMessageFor(model => model.SortId)
+                            </li>
+                            <li class="form_item">
+                                @Html.LabelFor(model => model.Path)
+                                @Html.EditorFor(model => model.Path)
+                                @Html.ValidationMessageFor(model => model.Path)
+                            </li>
+                            @Html.HiddenFor(model => model.CreateDate)
+                            @Html.HiddenFor(model => model.ModifyDate)
+                            <p>
+                                <input type="submit" value="Save" />
+                            </p>
+                    </ul>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".text-box").addClass("input_130x20");
+        $("#ParentID").addClass("input_130x20");
+
+    });
+</script>

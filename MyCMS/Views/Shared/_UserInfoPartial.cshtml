@@ -1,0 +1,35 @@
+﻿<div class="w_185 fl">
+    <div class="mod_white">
+        <h4 class="mod_hd">
+            个人信息
+        </h4>
+        <div class="inner_bor">
+            <ul class="user_info">
+                @*<li>姓&nbsp;&nbsp;&nbsp;&nbsp;名：<span>@Session["name"]</span></li>
+                <li>警员编号：<span>@Session["UserCode"]</span></li>
+                <li>所属部门：<span>@Session["DepName"]</span></li>
+                <li>所属角色：<span>@Session["UserRoleName"]</span></li>*@
+                <li>姓&nbsp;&nbsp;&nbsp;&nbsp;名：<span>@HttpUtility.UrlDecode(System.Web.HttpContext.Current.Request.Cookies["User"]["name"])</span></li>
+                <li>警员编号：<span>@System.Web.HttpContext.Current.Request.Cookies["User"]["UserCode"]</span></li>
+                <li>所属部门：<span>@HttpUtility.UrlDecode(System.Web.HttpContext.Current.Request.Cookies["User"]["DepName"])</span></li>
+                <li>所属角色：<span>@HttpUtility.UrlDecode(System.Web.HttpContext.Current.Request.Cookies["User"]["UserRoleName"])</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="mod_white mt_10">
+        <h4 class="mod_hd">
+            个人菜单
+        </h4>
+        <div class="inner_bor">
+            <ul class="user_orders">
+                <li><a href="/Upload" onclick="javascript:void(0);">
+                    我的上传</a></li>
+                <li><a href="/Notice" onclick="javascript:void(0);">
+                    所有公告</a></li>
+                <li><a href="/Account/Manage" onclick="javascript:void(0);">
+                    修改密码</a></li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()" onclick="javascript:void(0)">退出系统</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<MyCMS.Models.RoleMenu>
+@{
+    ViewBag.Title = "权限分配";
+}
+<h4 class="content_hd" id="mainTitle">
+    @ViewBag.Title
+</h4>
+<div class="content_bd">
+    <div class="mange_table log_table mt_10">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <table class="Js_grayBg common_table common_table_name">
+                <tbody>
+                    <tr>
+                        <th>
+                            @Html.Raw("勾选")
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MenuId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserRoleId)
+                        </th>
+                    </tr>
+                    @*@foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.CheckBox(item.MenuId.ToString(), item.Enable == true ? true : false)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MenuId)
+                                @Html.Raw(@ViewBag.MenuList)
+                                
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserRoleId)
+                            </td>
+                        </tr>
+                    }*@
+                    @{
+                        //取出第一级
+                        var first = Model.Where(p => p.menus.ParentId == 0).OrderByDescending(p => p.menus.SortId);
+                        foreach (var item in first)
+                        {
+                            
+                            <tr>
+                                <td>@Html.CheckBox(item.MenuId.ToString(), item.Enable == true ? true : false)</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.menus.MenuName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserRoleId)
+                                </td>
+                            </tr>
+                    
+                            //取出第一级的下级
+                            var subItems = Model.Where(p => p.menus.ParentId == item.menus.MenuId).OrderByDescending(p => p.menus.SortId);
+
+                            if (subItems.ToList().Count > 0)
+                            {
+                                foreach( var sub in subItems)
+                                {
+                                    <tr>
+                                        <td>@Html.CheckBox(sub.MenuId.ToString(), sub.Enable == true ? true : false)</td>
+                                        <td>
+                                            @Html.Raw("　　")@Html.DisplayFor(modelItem => sub.menus.MenuName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => sub.UserRoleId)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+            <br />
+            <p>
+                <input type="submit" value="保存" class="blue_mod_btn" />
+            </p>
+        }
+    </div>
+</div>

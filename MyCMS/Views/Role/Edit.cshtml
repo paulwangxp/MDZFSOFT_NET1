@@ -1,0 +1,45 @@
+﻿@model MyCMS.Models.webpages_Role
+@{
+    ViewBag.Title = "角色编辑";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                @*<legend>webpages_Role</legend>*@
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item">
+                            @Html.HiddenFor(model => model.RoleId)
+                            @Html.LabelFor(model => model.RoleName)
+                            @Html.EditorFor(model => model.RoleName)
+                            @Html.ValidationMessageFor(model => model.RoleName)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.Description)
+                            @Html.EditorFor(model => model.Description)
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </li>
+                        <p>
+                            <input onclick="location.href='javascript:void(0);'" type="submit" value="保存" class="blue_mod_btn"  /> @Html.ActionLink("返回列表", "Index", null, new { @class = "blue_mod_btn" })
+                        </p>
+            </fieldset>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".text-box").addClass("input_130x20");
+        $("#ParentID").addClass("input_130x20");
+
+    });
+</script>

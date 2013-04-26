@@ -1,0 +1,40 @@
+﻿@model MyCMS.Models.DepartmentModel
+@{
+    ViewBag.Title = "部门详情";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        <fieldset>
+            @*<legend>Department</legend>*@
+            <div class="new_form">
+                <ul class="form_list">
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.ParentId)
+                        @Html.DisplayFor(model => model.ParentId)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.name)
+                        @Html.DisplayFor(model => model.name)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.Description)
+                        @Html.DisplayFor(model => model.Description)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.SortId)
+                        @Html.DisplayFor(model => model.SortId)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.Path)
+                        @Html.DisplayFor(model => model.Path)
+                    </li>
+                </ul>
+            </div>
+        </fieldset>
+        <p>
+            @Html.ActionLink("编辑", "Edit", new { id = Model.DepartmentId }, new { @class = "blue_mod_btn" })
+            @Html.ActionLink("返回", "Index", null, new { @class = "blue_mod_btn" })
+        </p>
+    </div>
+</div>

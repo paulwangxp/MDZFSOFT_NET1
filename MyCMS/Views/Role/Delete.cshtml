@@ -1,0 +1,33 @@
+﻿@model MyCMS.Models.webpages_Role
+@{
+    ViewBag.Title = "删除角色";
+    @Html.ValidationSummary(true)
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        <fieldset>
+            @*<legend>webpages_Role</legend>*@
+            <div class="new_form">
+                <ul class="form_list">
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.RoleName)
+                        @Html.DisplayFor(model => model.RoleName)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </li>
+                    <li class="form_item">
+                        @Html.DisplayFor(model => model.Description)
+                    </li>
+                </ul>
+            </div>
+</fieldset>
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="submit" value="删除" class="blue_mod_btn" onclick='{if(confirm("确定删除吗？")){return true;}return false;}' />
+        @Html.ActionLink("返回", "Index", null, new { @class = "blue_mod_btn" })
+    </p>
+}
+</div> </div> 

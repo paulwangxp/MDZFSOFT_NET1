@@ -1,0 +1,48 @@
+﻿@model MyCMS.Models.DeviceModel
+@{
+    ViewBag.Title = "新建设备";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.DeviceTypeId)
+                            @Html.DropDownList("DeviceTypeId")
+                            @Html.ValidationMessageFor(model => model.DeviceTypeId)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.DeviceNumber)
+                            @Html.EditorFor(model => model.DeviceNumber)
+                            @Html.ValidationMessageFor(model => model.DeviceNumber)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.VendorId)
+                            @Html.DropDownList("VendorId")
+                            @Html.ValidationMessageFor(model => model.VendorId)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.UserId)
+                            @Html.EditorFor(model => model.UserId)
+                            @Html.ValidationMessageFor(model => model.UserId)
+                        </li>
+                    </ul>
+                </div>
+                <p>
+                <input onclick="location.href='javascript:void(0);'" type="submit" value="保存" class="blue_mod_btn" />
+                @Html.ActionLink("返回列表", "Index", null, new { @class = "blue_mod_btn" })
+                </p>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

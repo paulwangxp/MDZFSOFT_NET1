@@ -1,0 +1,58 @@
+﻿@model MyCMS.Models.VendorModel
+@{
+    ViewBag.Title = "厂商编辑";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                @Html.HiddenFor(model => model.VendorId)
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.Name)
+                            @Html.EditorFor(model => model.Name)
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.ContactPerson)
+                            @Html.EditorFor(model => model.ContactPerson)
+                            @Html.ValidationMessageFor(model => model.ContactPerson)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.Phone)
+                            @Html.EditorFor(model => model.Phone)
+                            @Html.ValidationMessageFor(model => model.Phone)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.Address)
+                            @Html.EditorFor(model => model.Address)
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </li>
+                    </ul>
+                <p>
+                    <input type="submit" value="保存" class="blue_mod_btn" />
+                    @Html.ActionLink("返回", "Index", null, new { @class = "blue_mod_btn" })
+                </p>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$("#Address").addClass("input_210x20");
+        $("#Address").attr("class", "input_320x20");
+        //$("#Address").attr("width", "320");
+    });
+        
+
+</script>

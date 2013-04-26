@@ -1,0 +1,87 @@
+﻿@model MyCMS.Models.DeviceModel
+@{
+    ViewBag.Title = "设备信息编辑";
+}
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">@ViewBag.Title</h5>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                @Html.HiddenFor(model => model.DeviceId)
+                <div class="new_form">
+                    <ul class="form_list">
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.DeviceTypeId)
+                            @Html.DropDownList("DeviceTypeId")
+                            @Html.ValidationMessageFor(model => model.DeviceTypeId)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.DeviceNumber)
+                            @Html.EditorFor(model => model.DeviceNumber)
+                            @Html.ValidationMessageFor(model => model.DeviceNumber)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.VendorId)
+                            @Html.DropDownList("VendorId")
+                            @Html.ValidationMessageFor(model => model.VendorId)
+                        </li>
+                        <li class="form_item">
+                            @Html.LabelFor(model => model.UserId)
+                            @Html.HiddenFor(model => model.UserId)                            
+                            @Html.ValidationMessageFor(model => model.UserId)
+                            <input type="text" class="input_79x19" id="uname" readonly="readonly" value="@ViewBag.UserName" onclick="userChoose();"/>  
+                            
+                        </li>
+                        <li class="form_item">
+                            @Html.HiddenFor(model => model.CreateTime)
+                            @Html.HiddenFor(model => model.ModifyTime)
+                            
+                        </li>
+                    </ul>
+                <p>
+                    <input type="submit" value="保存" class="blue_mod_btn" />
+                    @Html.ActionLink("返回", "Index", null, new { @class = "blue_mod_btn" })
+                </p>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        
+    });
+
+    /**
+    * 用户选择
+    * param assignmentId 
+    * param assignmentName 
+    * param dialogTitle 弹出层的标题
+    */
+    function userChoose() {
+        jQuery(function ($) {
+            //$.weeboxs.open('#userChooseDiv', { title: dialogTitle, contentType: 'selector', width: '600', height: '450' });
+            art.dialog.open('/User/UserSelect', { title: '', width: '700', height: '400', background: '#000',
+                ok: function () {
+                    $('#UserId').val(art.dialog.data('usercode'));
+                    $('#uname').val(art.dialog.data('username'));
+                    art.dialog.close();
+                },
+                cancel: function () {
+                    //$('#UserId').val('');
+                    //$('#user.Name').val('');
+                    art.dialog.close();
+                }
+            });
+        });
+    }
+</script>

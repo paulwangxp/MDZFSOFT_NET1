@@ -1,0 +1,104 @@
+﻿@model IEnumerable<MyCMS.Models.ActionLogModel>
+@{
+    ViewBag.Title = "操作日志";
+}
+<h4 class="content_hd">
+    @ViewBag.Title</h4>
+<div class="content_bd">
+    <div class="gray_bor_bg">
+        <h5 class="gray_blod_word">
+            组合条件搜索</h5>
+        @using (Html.BeginForm())
+        {
+            <div class="search_form">
+                <label>
+                    设备类型：</label>
+                <label>
+                    设备编号：</label>
+                <label>
+                    厂商名称：</label>
+                <input type="submit" class="blue_mod_btn" value="搜    索" />
+            </div>
+        }
+    </div>
+    <div class="mange_table log_table mt_10">
+        <table class="Js_grayBg common_table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DepartmentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoleName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Controller)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Action)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Discription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BrowserType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BrowserVersion)
+                </th>
+                <th>
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DepartmentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Controller)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Action)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BrowserType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BrowserVersion)
+                    </td>
+                    @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ActionLogId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ActionLogId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ActionLogId })
+                    </td>*@
+                </tr>
+    
+            }
+            <tr>
+                <td class="pl" colspan="9">
+                    <div class="pagination">
+                        @Html.Partial("_PagingNoNubmer")
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
