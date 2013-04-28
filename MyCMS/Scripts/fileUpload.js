@@ -105,7 +105,7 @@ function ftpCreateRemoteDir(remoteDir) {
     try {
         remoteDir = remoteDir + ',' + getCurrentDateString();//ftp目录格式  depid/userid/date
         ftpSetRemoteRoot();
-        static_remoteFileName = "/" + remoteDir.replace(",", "/").replace(",", "/");
+        static_remoteFileDir = "/" + remoteDir.replace(",", "/").replace(",", "/");
         saveDir = remoteDir;
         var dirArr = remoteDir.split(",");
         for (i = 0; i < dirArr.length; i++) {
@@ -196,7 +196,7 @@ function ftpUploadFile(localFile, ftpFile) {
     var str = "";
     try {
         str = MDOCX.ftpUploadFile(localFile, ftpFile);
-        static_remoteFileName = static_remoteFileName + "/" + ftpFile;//在这里得到上传文件的FTP全路径文件名
+        static_remoteFileName = static_remoteFileDir + "/" + ftpFile; //在这里得到上传文件的FTP全路径文件名
         if (str != "1") {
             $ALT("ftp开始上传文件失败，请与管理员联系");
         }
@@ -879,7 +879,6 @@ $(document).ready(function () {
 
     if (static_ftpLogin)//ftp登录没有问题
     {
-        alert('1');
         ftpSetRemoteRoot();
         ftpSetFileStepSize(10);
 

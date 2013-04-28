@@ -201,6 +201,7 @@
     <Compile Include="Models\DeviceType.cs" />
     <Compile Include="Models\DevTools.cs" />
     <Compile Include="Models\FileUserViewModel.cs" />
+    <Compile Include="Models\ImageHelper.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\MyCMSDBContent.cs" />
     <Compile Include="Models\Notice.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\themes\mytheme\images\wav_128x128.png" />
     <Content Include="FTP\1\1\20130423\20130423_164734_868.jpg" />
     <Content Include="FTP\1\1\20130423\20130423_164734_868.mp4" />
     <Content Include="FTP\1\1\20130423\20130423_165028_989.mp4" />
@@ -483,6 +485,7 @@
     <Content Include="Scripts\artDialog\skins\opera\s2.png" />
     <Content Include="Scripts\artDialog\skins\simple.css" />
     <Content Include="Scripts\artDialog\skins\twitter.css" />
+    <Content Include="Scripts\ckplayer\wav.html" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\fileUpload.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />

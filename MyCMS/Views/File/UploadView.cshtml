@@ -52,7 +52,7 @@ $.datepicker.regional['zh_CN'] = {
                             type="text" class="input_79x19" id="UploadendDate" />
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <label>
-                    所属部门：</label>@Html.DropDownList("DepartmentId", null, new { @class = "input_79x19" })
+                        所属部门：</label>@Html.DropDownList("DepartmentId", null, new { @class = "input_79x19" })
                 </div>
                 <div class="mt_10">
                     <label>
@@ -68,8 +68,12 @@ $.datepicker.regional['zh_CN'] = {
             {
                 <li class="upload_item">
                     <div class="upload_img">
-                        <a href="/" class="img160">
-                            <img src="@item.ImageShowPath" alt="" title="@item.Description" />
+                        <a href="#" class="img160">
+                            @{if (item.UploadFileType == 2)
+                              {<img src="~/Content/themes/mytheme/images/wav_128x128.png" alt="@item.Description" title="@item.Description" />}
+                              else
+                              {<img src="@item.ImageShowPath" alt="@item.Description" title="@item.Description" />}
+                                }
                         </a>
                     </div>
                     <div class="upload_descript">
@@ -86,16 +90,15 @@ $.datepicker.regional['zh_CN'] = {
                         </ul>
                     </div>
                     <div class="clearfix mt_10">
-                        <a href="" class="fl cancle">取消</a> 
-                        <a href="###" class="blue_mod_btn fr" onclick="playVideo();">
-                            @{if (item.UploadFileType == 1)
-                              {@Html.Raw("播放视频")}
+                        <a href="" class="fl cancle">取消</a> <a href="###" class="blue_mod_btn fr" onclick="playFile(@item.FileId, @item.UploadFileType);">
+                            @{if (item.UploadFileType == 3)
+                              {@Html.Raw("查看图片")}
                               else
                               {
                                   if (item.UploadFileType == 2)
                                   {@Html.Raw("播放音频")}
                                   else
-                                  {@Html.Raw("查看图片")}
+                                  {@Html.Raw("播放视频")}
                               }
                             }
                         </a>
@@ -119,14 +122,64 @@ $.datepicker.regional['zh_CN'] = {
         $(".ui-datepicker").css("display", "none");
     });
 
-    function playVideo() {
-        art.dialog.open('/User/UserSelect', { title: '', width: '700', height: '400', background: '#000',
-            ok: function () {
-                setUserValue(art.dialog.data('username'), art.dialog.data('usercode'));
-                art.dialog.close();
+    function playFile(fileId,fileType) {
+        //alert(fileId); alert(fileType);;
+        //ajax get fileUrl
+
+        var fileUrl = "";
+        $.ajax({
+            url: '/File/UploadViewFileUrl',
+            type: 'post',
+            dataType: 'json',
+            cache: false,
+            async: false,
+            data: 'fileId=' + fileId + '&fileType=' + fileType,
+            success: function (json) {
+                if (json != null) {
+                    if (json.bSuccess) {
+                        fileUrl = json.fileUrl;
+                    }
+                    else {
+                        alert(json.msg);
+                    }
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //alert("complete");                    
+            },
+            error: function () {
+                alert("请求失败!");
+                return;
             }
-        })
-    };
+        });
+
+ 
+
+        if (fileType == 3)//jpg
+        {
+//            art.dialog.open(fileUrl,
+            //            { padding: 0, title: '查看图片', width: '648', height: '486', background: '#000' })
+
+            art.dialog({
+                padding: 0,
+                title: '照片',
+                content: '<img src=' + fileUrl + ' width="648" height="486" />',
+                lock: true
+            });
+        }
+        else if(fileType == 2)//wav
+        {
+            art.dialog.open('/Scripts/ckplayer/wav.html?' + "fileUrl=" + fileUrl, 
+                { title: '播放音频', width: '396', height: '66', background: '#000',drag:false,resize:false
+                    })
+        }
+        else {
+                art.dialog.open('/Scripts/ckplayer/play.html?' + "fileUrl=" + fileUrl,
+                { title: '视频播放', width: '648', height: '486', background: '#000', drag: false, resize: false
+                    })
+            }
+
+    }
     
     
     /**

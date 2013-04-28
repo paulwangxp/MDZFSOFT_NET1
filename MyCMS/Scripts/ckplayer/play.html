@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -24,16 +24,27 @@ p {
 </style>
 </head>
 
-<body>
-<div id="video" style="position:relative;z-index: 100;width:600px;height:400px;"><div id="a1"></div></div>
+<body oncontextmenu="window.event.returnValue=false" 
+onkeypress="window.event.returnValue=false" 
+onkeydown="window.event.returnValue=false" 
+onkeyup="window.event.returnValue=false" 
+ondragstart="window.event.returnValue=false" 
+onselectstart="event.returnValue=false" >
+<div id="video" style="position:relative;z-index: 100;"><div id="a1"></div></div>
 <!--
 上面一行是播放器所在的容器名称，如果只调用flash播放器，可以只用<div id="a1"></div>
 -->
 <script type="text/javascript" src="ckplayer.js" charset="utf-8"></script>
 <script type="text/javascript">
-	//如果你不需要某项设置，可以直接删除，注意var flashvars的最后一个值后面不能有逗号
+    //如果你不需要某项设置，可以直接删除，注意var flashvars的最后一个值后面不能有逗号
+    var str = window.location.href;
+    var pos = str.indexOf("fileUrl=");
+    if (pos) {
+        var fileUrl = str.substring(pos + 8);
+        //alert(fileUrl);
+    }
 	var flashvars={
-	    f: 'http://movie.ks.js.cn/flv/other/02.mp4', //视频地址
+	    f: fileUrl, //视频地址
 		a:'',//调用时的参数，只有当s>0的时候有效
 		s:'0',//调用方式，0=普通方法（f=视频地址），1=网址形式,2=xml形式，3=swf形式(s>0时f=网址，配合a来完成对地址的组装)
 		c:'0',//是否读取文本配置,0不是，1是
@@ -62,18 +73,19 @@ p {
 		//调用播放器的所有参数列表结束
 };
 function ckmarqueeadv() { return '' }
-	  CKobject.embedSWF('ckplayer.swf','a1','ckplayer_a1','600','400',flashvars);
+	  CKobject.embedSWF('ckplayer.swf','a1','ckplayer_a1','648','486',flashvars);
 	  /*CKobject.embedSWF(播放器路径,容器id,播放器id/name,播放器宽,播放器高,flashvars的值,其它定义也可省略);*/
 		//调用ckplayer的flash播放器结束
 	/*
 	下面三行是调用html5播放器用到的
 	var video='视频地址和类型';
-	var support='支持的平台或浏览器内核名称';	
+	var support='支持的平台或浏览器内核名称';
 	*/
 	//var video={'http://movie.ks.js.cn/flv/other/02.mp4':'video/mp4'};
 	//var support=['iPad','iPhone','ios','android+false','msie10+false'];//默认的在ipad,iphone,ios设备中用html5播放,android,ie10上没有安装flash的也调用html5
 	//CKobject.embedHTML5('video','ckplayer_a1',600,400,video,flashvars,support);
 	//如果不想使用html5播放器，只要把上面三行去掉就可以了
   </script>
+
 </body>
 </html>

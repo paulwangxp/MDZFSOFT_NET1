@@ -41,7 +41,7 @@
     <div class="gray_bor_bg">
         <h5 class="gray_blod_word">
             组合条件搜索</h5>
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Index","User"))
         {
             <div class="search_form">
                 <label>
@@ -51,6 +51,7 @@
                 <label>
                     所属部门：</label>@Html.DropDownList("DepartmentId", null, new { @class = "input_79x19" })
                 <input type="submit" class="blue_mod_btn" value="搜    索" />
+                <input type="submit" class="blue_mod_btn" value="重    置" />
             </div>
         }
     </div>

@@ -14,6 +14,15 @@ namespace MyCMS.Controllers
     [Authorize]
     public class FileController : Controller
     {
+
+        enum FileType
+        {
+            AVI = 0,
+            MP4 = 1,
+            WAV = 2,
+            JPG = 3
+        };
+
         private MyCMSDBContent db = new MyCMSDBContent();
 
         //
@@ -77,6 +86,35 @@ namespace MyCMS.Controllers
         }
 
         [HttpPost]
+        public ActionResult UploadViewFileUrl(int fileId = 0, int fileType = 0)
+        {
+            bool result = true;
+            string fUlr = "";
+
+            FileModel filemodel = db.FileModels.Find(fileId);
+            if (filemodel == null)
+            {
+               result = false;
+            }
+
+            fUlr = filemodel.PlayPath;
+            
+
+            JsonResult json = new JsonResult();
+            json.Data = new
+            {
+                bSuccess = result,
+                fileUrl = fUlr,
+                msg = "要查看的文件不存在！"
+            };
+
+
+
+
+            return json;
+        }
+
+        [HttpPost]
         public ActionResult GetDiskFreeSpaceAllowUpload()
         {
             bool result = true;
@@ -117,18 +155,42 @@ namespace MyCMS.Controllers
 
             //服务器上的文件保存根目录
             string fileSeverPath = @System.Configuration.ConfigurationManager.AppSettings["FtpRootDir"];
+
             //文件截图尺寸
-            string imgSize = "160x160";
-            //生成的jpg文件名,DB中用
-            string jpgFileName = "/FTP" + uploadFileName;               //相对路径地址
-            jpgFileName = Path.ChangeExtension(jpgFileName, "jpg");
-            //生成的jpg文件名，截图用
+            string imgSize = @System.Configuration.ConfigurationManager.AppSettings["CutImageSize"];
+            //文件查看尺寸
+            string imgViewSize = @System.Configuration.ConfigurationManager.AppSettings["ViewImageSize"];
+
+            //生成的jpg文件名,DB中用,最后生成的文件名类似于/FTP/1/1/123_160x160.jpg
+            string ImgShowPath = "/" + @System.Configuration.ConfigurationManager.AppSettings["FtpDirName"] + uploadFileName;               //相对路径地址
+            ImgShowPath = Path.ChangeExtension(ImgShowPath, "jpg");
+            ImgShowPath = ImgShowPath.Replace(".jpg", "") + "_" + imgSize + ".jpg";
+            //生成的jpg文件名，截图用，物理地址
             string jpgTrueFileName = fileSeverPath + uploadFileName;    //物理地址
             jpgTrueFileName = Path.ChangeExtension(jpgTrueFileName, "jpg");
+            jpgTrueFileName = jpgTrueFileName.Replace(".jpg", "") + "_" + imgSize + ".jpg";
+
+
+            //图片的查看地址，比预览图大，比真实图小
+            string ImgPlayPath = "/" + @System.Configuration.ConfigurationManager.AppSettings["FtpDirName"] + uploadFileName;
+            ImgPlayPath = Path.ChangeExtension(ImgPlayPath, "jpg");
+            ImgPlayPath = ImgPlayPath.Replace(".jpg", "") + "_" + imgViewSize + ".jpg";
+            //生成的jpg文件名，查看图片用，物理地址
+            string ImgPlayTruePath = fileSeverPath + uploadFileName;    //物理地址
+            ImgPlayTruePath = Path.ChangeExtension(ImgPlayTruePath, "jpg");
+            ImgPlayTruePath = ImgPlayTruePath.Replace(".jpg", "") + "_" + imgViewSize + ".jpg";
+
             
 
-            //截图
-            DevTools.CatchImg(fileSeverPath + uploadFileName, jpgTrueFileName, imgSize);
+
+
+            if (fileType != (int)FileType.WAV && fileType != (int)FileType.JPG)             //截图
+                DevTools.CatchImg(fileSeverPath + uploadFileName, jpgTrueFileName, imgSize);
+            else if (fileType == (int)FileType.JPG)                                         
+            {
+                DevTools.GetSmallImage(fileSeverPath + uploadFileName, jpgTrueFileName, imgSize);//图片缩小
+                DevTools.GetSmallImage(fileSeverPath + uploadFileName, ImgPlayTruePath, imgViewSize);//图片查看
+            }
 
             try
             {
@@ -142,17 +204,27 @@ namespace MyCMS.Controllers
                 _uploadFile.UploadFileName = uploadFileName;            //上传文件名(包括FTP路径名 如/1/1/123.mp4)
                 _uploadFile.CreateTime = Convert.ToDateTime(createTime);//文件创建时间
                 _uploadFile.RecordTime = Convert.ToDateTime(recordTime);//文件修改时间
-                _uploadFile.ImageShowPath = jpgFileName;                //截图文件路径
+
+                if (fileType != (int)FileType.WAV)//wav文件没有截图
+                    _uploadFile.ImageShowPath = ImgShowPath;                //截图文件路径
 
                 _uploadFile.FileImportance = 0;                         //文件重要性
                 _uploadFile.FileState = 0;                              //文件状态
                 _uploadFile.FileSize = DevTools.GetFileSize(fileSeverPath + uploadFileName);//文件的大小
+                if (fileType != (int)FileType.JPG)//如果是MP4，则设置播放路径，一般是 /ftp/1/1/20130202/111.mp4
+                {
+                    _uploadFile.PlayPath = "/" + @System.Configuration.ConfigurationManager.AppSettings["FtpDirName"] + uploadFileName;
+                }
+                else
+                {
+                    _uploadFile.PlayPath = ImgPlayPath;
+                }
 
                 _uploadFile.RealPath = @System.Configuration.ConfigurationManager.AppSettings["ServerIP"] + ":" +
                     @System.Configuration.ConfigurationManager.AppSettings["ServerPort"];//服务器ip，分布式访问用
 
                 _uploadFile.UploadTime = DevTools.GetNowDateTime();     //上传的时间
-                _uploadFile.UploadUserIP = DevTools.GetIP();            //上传人IP
+                _uploadFile.UploadUserIP = DevTools.GetClientIP();      //上传人IP
 
 
                 db.FileModels.Add(_uploadFile);

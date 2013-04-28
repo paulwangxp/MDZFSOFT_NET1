@@ -12,7 +12,8 @@ namespace MyCMS.Models
     public static class DevTools
     {
 
-        public static string GetIP()
+        //得到访问者IP
+        public static string GetClientIP()
         {
             string result = String.Empty;
 
@@ -39,13 +40,20 @@ namespace MyCMS.Models
                     System.DateTime.Now.Hour, System.DateTime.Now.Minute, System.DateTime.Now.Second);
         }
 
-        public static void CatchImg(string fileName, string imgFile, string imgSize/* 240x120 */)
+        /// <summary>
+        /// 视频截图
+        /// </summary>
+        /// <param name="fileName">上传视频文件的路径（原文件）</param>
+        /// <param name="imgNewFile">生成的图片文件名（全路径）</param>
+        /// <param name="imgSize">截图生成的图片尺寸，格式 "640x480"</param>
+        /// <returns></returns>
+        public static void CatchImg(string fileName, string imgNewFile, string imgSize/* 240x120 */)
         {
             //获取截图工具路径
             string ffmpeg = @System.Configuration.ConfigurationManager.AppSettings["ffmpeg"];
 
             //获取截图后保存的路径
-            string flv_img = imgFile;
+            string flv_img = imgNewFile;
 
             //获取截取图片的大小
             string FlvImgSize = imgSize;
@@ -78,7 +86,7 @@ namespace MyCMS.Models
         /// </summary>
         /// <param name="fileName">上传视频文件的路径（原文件）</param>
         /// <param name="playFile">转换后的文件的路径（网络播放文件）</param>
-        /// <param name="imgFile">从视频文件中抓取的图片路径</param>
+        /// <param name="imgNewFile">从视频文件中抓取的图片路径</param>
         /// /// <param name="windowSize">转码后的视频文件尺寸，格式 "640x480"</param>
         /// <returns>成功:返回图片虚拟地址;   失败:返回空字符串</returns>
         public static string ChangeFileType(string fileName, string playFile, string windowSize, string imgFile, string imgSize)
@@ -151,5 +159,22 @@ namespace MyCMS.Models
             return fo.Length;
         }
         #endregion
+
+        public static void GetSmallImage(string oldFileName, string newFileName, string width)
+        {
+            try
+            {
+                ImageHelper imgHelper = new ImageHelper();
+                imgHelper.SmallPic(oldFileName, newFileName, width);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+
+        }
+
     }
 }

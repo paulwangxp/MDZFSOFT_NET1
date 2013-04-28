@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ckplayer</title>
+    <style type="text/css">
+body,td,th {
+	font-size: 14px;
+	line-height: 26px;
+}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+p {
+	margin-top: 5px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-left: 10px;
+}
+</style>
+</head>
+<body oncontextmenu="window.event.returnValue=false" 
+onkeypress="window.event.returnValue=false" 
+onkeydown="window.event.returnValue=false" 
+onkeyup="window.event.returnValue=false" 
+ondragstart="window.event.returnValue=false" 
+onselectstart="event.returnValue=false" >
+    <div id="obj1">
+    </div>
+    <script type="text/javascript">
+        var str = window.location.href;
+        var pos = str.indexOf("fileUrl=");
+        if (pos) {
+            var fileUrl = str.substring(pos + 8);
+        }
+
+        var obj = ' <object type="application/x-oleobject" classid="CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6"> ';
+        obj += ' <param name="URL" value=   '; obj += fileUrl; obj += '>';
+        obj += ' <param name="rate" value="1"> ';
+        obj += ' <param name="balance" value="0"> ';
+        obj += ' <param name="currentPosition" value="0"> ';
+        obj += ' <param name="defaultFrame" value=""> ';
+        obj += ' <param name="playCount" value="1"> ';
+        obj += ' <param name="autoStart" value="-1"> ';
+        obj += ' <param name="currentMarker" value="0"> ';
+        obj += ' <param name="invokeURLs" value="-1"> ';
+        obj += ' <param name="baseURL" value=""> ';
+        obj += ' <param name="volume" value="80"> ';
+        obj += ' <param name="mute" value="0"> ';
+        obj += ' <param name="uiMode" value="full"> ';
+        obj += ' <param name="stretchToFit" value="-1"> ';
+        obj += ' <param name="windowlessVideo" value="0"> ';
+        obj += ' <param name="enabled" value="-1"> ';
+        obj += ' <param name="enableContextMenu" value="0"> ';
+        obj += ' <param name="fullScreen" value="0"> ';
+        obj += ' <param name="SAMIStyle" value=""> ';
+        obj += ' <param name="SAMILang" value=""> ';
+        obj += ' <param name="SAMIFilename" value=""> ';
+        obj += ' <param name="captioningID" value=""> ';
+        obj += ' <param name="enableErrorDialogs" value="0"> ';
+        obj += ' <param name="_cx" value="10372"> ';
+        obj += ' <param name="_cy" value="1693"> ';
+        obj += ' <embed type="application/x-mplayer2"></embed> ';
+        obj += ' </object> ';
+
+        document.getElementById("obj1").innerHTML = obj;
+        //document.body.innerHTML = obj;
+    </script>
+</body>
+</html>
